@@ -1,5 +1,6 @@
  package com.ea.redsea.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.CascadeType;
@@ -11,7 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 @Entity
-public class BookHotel {
+public class BookHotel implements Serializable{
+	private static final long serialVersionUID = 123456789L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
