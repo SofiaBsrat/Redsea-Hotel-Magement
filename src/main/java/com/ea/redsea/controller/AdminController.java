@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,13 +15,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ea.redsea.domain.BookHotel;
 import com.ea.redsea.domain.Hotel;
+import com.ea.redsea.service.BookHotelService;
+import com.ea.redsea.service.HotelService;
 
 
-//@Autowired
-//BookHotelService   bookhotellist
+
+
 @Controller
 @RequestMapping({ "/admin" })
 public class AdminController {
+	@Autowired
+	HotelService   hotelservice;
+	BookHotelService bookhotelservice;
+	
 	
 	@RequestMapping({ "" })
 	public String User(Model model) {
@@ -32,17 +39,17 @@ public class AdminController {
 
 	@RequestMapping({ "/listHotel" })
 	public String Hotellist(Model model) {
-		// List<Hotel> hotels= hotelservice.findAll();
-		Hotel hotels = new Hotel();
-		hotels.setName("s");
-		hotels.setContact("sophias");
-		Hotel hotelss = new Hotel();
-		hotelss.setName("sophia");
-		hotelss.setContact("sophias");
-		List<Hotel> hotel = new ArrayList<>();
-		hotel.add(hotels);
-		hotel.add(hotelss);
-		model.addAttribute("hotellist", hotel);
+		 List<Hotel> hotels= hotelservice.findAll();
+//		Hotel hotels = new Hotel();
+//		hotels.setName("s");
+//		hotels.setContact("sophias");
+//		Hotel hotelss = new Hotel();
+//		hotelss.setName("sophia");
+//		hotelss.setContact("sophias");
+//		List<Hotel> hotel = new ArrayList<>();
+//		hotel.add(hotels);
+//		hotel.add(hotelss);
+		model.addAttribute("hotellist", hotels);
 		return "adminlistHotel";
 	}
 	
@@ -75,18 +82,18 @@ public class AdminController {
 	}
 	@RequestMapping(value = "/booked", method = RequestMethod.GET)
 	public String BookedHotellist(Model model) {
-		// List<BookHotel> hotels=bookhotellist.findAll();
-		// it should be Bookedhotel list 
-		BookHotel hotels = new BookHotel();
-		hotels.setRoomtype("single");
-		BookHotel hotelss = new BookHotel();
-		hotels.setRoomtype("double");
-		
-		
-		List<BookHotel> hotel = new ArrayList<>();
-		hotel.add(hotels);
-		hotel.add(hotelss);
-		model.addAttribute("hotellist", hotel);
+		List<BookHotel> hotels=bookhotelservice.findAll();
+//		// it should be Bookedhotel list 
+//		BookHotel hotels = new BookHotel();
+//		hotels.setRoomtype("single");
+//		BookHotel hotelss = new BookHotel();
+//		hotels.setRoomtype("double");
+//		
+//		
+//		List<BookHotel> hotel = new ArrayList<>();
+//		hotel.add(hotels);
+//		hotel.add(hotelss);
+		model.addAttribute("hotellist", hotels);
 		return "bookedHotellist";
 		/// save reservation for the user in database
 		
