@@ -3,6 +3,7 @@ package com.ea.redsea.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -73,6 +74,7 @@ public class UserController {
 	public String getAddBookForm(@RequestParam("id") Long id,Model model) {
 		System.out.println(id);
 		 hotel=hotelservice.findOne(id);
+		 
 		List<String> roomtype = new ArrayList<>();
 		roomtype.add("1bed room");
 		roomtype.add("2bed room");
@@ -83,12 +85,15 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/reservation", method = RequestMethod.POST)
-	public String AddBookFormProcess(@Valid Model model, BookHotel bhotel, BindingResult result,RedirectAttributes rm) {
-		 Member member=memberService.findOne(1L);
+	public String AddBookFormProcess(@Valid Model model, BookHotel bhotel, BindingResult result,RedirectAttributes rm,HttpSession session) {
+		 Member member=(Member) session.getAttribute("currentuser");
+		 member.setUserCredentials(null);
+		 System.out.println(member.getEmail());
 		System.out.println(bhotel.getRoomtype());
 		System.out.println(bhotel.getTodate());
 		System.out.println(bhotel.getFromdate());
 		bhotel.setHotel(hotel);
+		
 		bhotel.setMember(member);
 		//bookHotelServece.save(bhotel);
 		
