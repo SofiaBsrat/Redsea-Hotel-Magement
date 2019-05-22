@@ -1,5 +1,6 @@
 package com.ea.redsea.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -24,7 +25,12 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Entity 
-public class Member {
+public class Member implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 109790790L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

@@ -37,6 +37,7 @@
 		<div class="container">
 			<div class="row">
 
+              <label for="from">${hotel.name}</label>
 				<div class="row">
 					<div class="form-group col-xs-6">
 						<label for="from">From Date:</label> <input type="date"
@@ -44,6 +45,8 @@
 							class="form-control" id="from" name="todate">
 					</div>
 				</div>
+				
+				
 				<div class="row">
 					<div class="form-group col-xs-6">
 						<label for="to">To Date:</label> <input type="date" name="fromdate"

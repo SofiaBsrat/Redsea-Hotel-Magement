@@ -53,7 +53,7 @@
 						<td><c:out value="${hotel.rating}" /></td>
 						<td><c:out value="${hotel.address}" /></td>
 						<td><c:out value="${hotel.price}" /></td> 
-						 <td> <a href="reservation" class="btn btn-info" role="button">Book</a> </td>
+						 <td> <a href="reservation?id=${hotel.id}" class="btn btn-info" role="button">Book</a> </td>
 					</tr>
 				</c:forEach>
 			</tbody> 
