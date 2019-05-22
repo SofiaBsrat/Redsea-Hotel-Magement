@@ -14,13 +14,13 @@
  
 
 <!-- *********** DIRECT EXCHANGE ***************** -->
-			<rabbit:queue name="MarriottHotelQueue" durable="true"/>
-			<rabbit:queue name="KerenHotelQueue" durable="true"/>
+			<rabbit:queue name="marriottHotelQueue" durable="true"/>
+			<rabbit:queue name="kerenHotelQueue" durable="true"/>
 
 			 <rabbit:direct-exchange name="hotelDirectExchange" durable="true">
 			  <rabbit:bindings>
-			   <rabbit:binding queue="MarriottHotelQueue" key="hotel.marriott"></rabbit:binding>
-			   <rabbit:binding queue="KerenHotelQueue" key="hotel.keren"></rabbit:binding>
+			   <rabbit:binding queue="marriottHotelQueue" key="hotel.marriott"></rabbit:binding>
+			   <rabbit:binding queue="kerenHotelQueue" key="hotel.keren"></rabbit:binding>
 			  </rabbit:bindings>
 			 </rabbit:direct-exchange>
 
