@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ea.redsea.domain.BookHotel;
 import com.ea.redsea.domain.Hotel;
 import com.ea.redsea.domain.Member;
+import com.ea.redsea.service.BookHotelService;
 import com.ea.redsea.service.HotelService;
 import com.ea.redsea.service.MemberService;
 import com.ea.redsea.service.impl.HotelServiceImpl;
@@ -33,6 +34,9 @@ public class UserController {
 	
 	@Autowired
 	HotelService hotelservice;
+	
+	@Autowired
+	BookHotelService bookHotelServece;
 	
 	//curent user to be removed later for a session
 		// Member member=memberService.findOne(1L);
@@ -86,6 +90,7 @@ public class UserController {
 		System.out.println(bhotel.getFromdate());
 		bhotel.setHotel(hotel);
 		bhotel.setMember(member);
+		//bookHotelServece.save(bhotel);
 		
 		//to be send to RabbitMQ
 		BookHotel hotel=new BookHotel();
@@ -112,24 +117,33 @@ public class UserController {
 		
 		ApplicationContext context = new GenericXmlApplicationContext("classpath:context/order-app-context.xml");
 		
-		// Publish to "direct" exchange on order.store == orderDirectQueue
-        RabbitTemplate marriothotelTemplate =  context.getBean("hotelMarriottTemplate",RabbitTemplate.class);
-    	HotelService marriotthotelService = new HotelServiceImpl();
-    	marriotthotelService.publish(marriothotelTemplate,hotel);
+		if("Marriott Hotel".equals(hotel.getHotel().getName())) {
+			// Publish to "direct" exchange on order.store == orderDirectQueue
+	        RabbitTemplate marriothotelTemplate =  context.getBean("hotelMarriottTemplate",RabbitTemplate.class);
+	    	HotelService marriotthotelService = new HotelServiceImpl();
+	    	marriotthotelService.publish(marriothotelTemplate,hotel);
+	    	
+	    	System.out.print("************* Kazoo & Water Balloon sent to Order Store Queue  on orderDirect Exchange*********************::   ");
+	        System.out.println();
+	        System.out.println();
+		}
+		
+		else if("Keren Hotel".equals(hotel.getHotel().getName())) {
+			
+			// Publish to "direct" exchange on order.online == orderDirectQueue
+		       RabbitTemplate kerenHotelTemplate =  context.getBean("hotelKerenTemplate",RabbitTemplate.class);
+		       HotelService kerenhotelservice = new HotelServiceImpl();
+		       kerenhotelservice.publish(kerenHotelTemplate,hotel);
 
-    	System.out.print("************* Kazoo & Water Balloon sent to Order Store Queue  on orderDirect Exchange*********************::   ");
-        System.out.println();
-        System.out.println();
+
+		        System.out.print("************* Ski & Skates sent to Order Online Queue  on orderDirect Exchange*********************::   ");
+		           System.out.println();
+			
+		}
+    	
     
 
-     	// Publish to "direct" exchange on order.online == orderDirectQueue
-       RabbitTemplate kerenHotelTemplate =  context.getBean("hotelKerenTemplate",RabbitTemplate.class);
-       HotelService kerenhotelservice = new HotelServiceImpl();
-       kerenhotelservice.publish(kerenHotelTemplate,hotel);
-
-
-        System.out.print("************* Ski & Skates sent to Order Online Queue  on orderDirect Exchange*********************::   ");
-           System.out.println();
+     	
 	}
 
 }
